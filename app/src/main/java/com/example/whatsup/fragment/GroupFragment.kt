@@ -24,6 +24,7 @@ import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.fragment_group.*
+import org.jetbrains.anko.support.v4.find
 import org.jetbrains.anko.support.v4.startActivity
 
 // TODO: Rename parameter arguments, choose names that match
@@ -57,12 +58,17 @@ class GroupFragment : Fragment() {
 
         var view = inflater.inflate(R.layout.fragment_group, container, false)
 
-        button_add_group.setOnClickListener{
-            startActivity<CreerGroupActivity>()
-        }
+//        val floatingActionButton : FloatingActionButton = find(R.id.button_add_group)
+//        floatingActionButton.setOnClickListener {
+//            startActivity<CreerGroupActivity>()
+//        }
 
         // Inflate the layout for this fragment
         return view
+    }
+
+    private fun click() {
+
     }
 
 

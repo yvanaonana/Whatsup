@@ -3,12 +3,12 @@
 
     <item
             android:id="@+id/navigation_people"
-            android:icon="@drawable/ic_people_black_24dp"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/people"/>
 
     <item
             android:id="@+id/navigation_my_account"
-            android:icon="@drawable/ic_account_circle_black_24dp"
-            android:title="@string/account"/>
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="Groups"/>
 
 </menu>
