@@ -23,8 +23,8 @@ import com.example.whatsup.model.MessageType
 import com.example.whatsup.model.TextMessage
 import com.example.whatsup.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.mirai.whatsup.receycleView.item.ImageMessageItemGroup
-import com.mirai.whatsup.receycleView.item.TextMessageItemGroup
+import com.example.whatsup.recyclerview.item.ImageMessageItemGroup
+import com.example.whatsup.recyclerview.item.TextMessageItemGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.kotlinandroidextensions.Item

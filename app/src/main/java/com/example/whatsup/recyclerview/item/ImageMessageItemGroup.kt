@@ -1,4 +1,4 @@
-package com.mirai.whatsup.receycleView.item
+package com.example.whatsup.recyclerview.item
 
 import android.content.Context
 import com.bumptech.glide.Glide
@@ -6,18 +6,17 @@ import com.example.whatsup.R
 import com.example.whatsup.Util.FirestoreUtil
 import com.example.whatsup.Util.StorageUtil
 import com.example.whatsup.model.ImageMessage
-import com.example.whatsup.recyclerview.item.MessageItem
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-import kotlinx.android.synthetic.main.item_image_message.*
 import kotlinx.android.synthetic.main.item_image_message_groupe.*
 
 class ImageMessageItemGroup(val message: ImageMessage,
-                            val context:Context): MessageItem(message) {
+                            val context: Context
+): MessageItem(message) {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         super.bind(viewHolder, position)
         Glide.with(context)
-            .load(StorageUtil.pathToReference(message.ImagePath))
+            .load(StorageUtil.pathToReference(message.imagePath))
             .into(viewHolder.imageView_message_image_groupe)
 
         FirestoreUtil.getUserByUid(message.senderId, onComplete = {

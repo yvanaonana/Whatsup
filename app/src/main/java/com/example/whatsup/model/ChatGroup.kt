@@ -1,4 +1,4 @@
-package com.mirai.whatsup.entities
+package com.example.whatsup.model
 
 import java.util.*
 

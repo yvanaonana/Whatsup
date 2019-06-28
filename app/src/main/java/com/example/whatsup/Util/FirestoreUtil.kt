@@ -3,16 +3,11 @@ package com.example.whatsup.Util
 import android.content.Context
 import android.util.Log
 import com.example.whatsup.model.*
-import com.example.whatsup.recyclerview.item.ImageMessageItem
-import com.example.whatsup.recyclerview.item.PersonItem
-import com.example.whatsup.recyclerview.item.TextMessageItem
+import com.example.whatsup.recyclerview.item.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.mirai.whatsup.entities.ChatGroup
-import com.mirai.whatsup.receycleView.item.ImageMessageItemGroup
-import com.mirai.whatsup.receycleView.item.TextMessageItemGroup
 import com.xwray.groupie.kotlinandroidextensions.Item
 import java.lang.NullPointerException
 import java.util.*
@@ -204,6 +199,92 @@ object FirestoreUtil {
         groupeChatCollectionRef.document(groupeId)
             .collection("messages")
             .add(message)
+    }
+
+    fun addSearchGroupeListener(searchingcriterion: String,
+                                context: Context,
+                                onListen: (List<Item>) -> Unit): ListenerRegistration {
+        return firestoreInstance.collection("chatgroupes")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.e("FIRESTORE", "Groupes listener error?", firebaseFirestoreException)
+                    return@addSnapshotListener
+                }
+
+                val items = mutableListOf<Item>()
+                querySnapshot?.documents?.forEach {
+                    // on convertie a chaque fois le groupe courant en objet
+                    val curentGroup = it.toObject(ChatGroup::class.java)!!
+
+                    if (!searchingcriterion.isEmpty()) {
+                        if (it["groupeName"].toString().toUpperCase().contains(searchingcriterion.toUpperCase())
+                            || it["groupeDescription"].toString().toUpperCase().contains(searchingcriterion.toUpperCase())
+                        ) {
+                            // on parcour les membres du groupe un par un
+                            for (itm in curentGroup.members!!) {
+
+                                /* si l'utilisateur fait partir des membres du groupe oubien s'il est l'administrateur
+                                 du groupe on affiche le groupe dans son telephone
+                                 */
+                                if (itm == FirebaseAuth.getInstance().currentUser?.uid
+                                    || curentGroup.adminId == FirebaseAuth.getInstance().currentUser?.uid
+                                ) {
+
+
+                                    items.add(GroupeItem(it.toObject(ChatGroup::class.java)!!, it.id, context))
+                                    break
+                                }
+                            }
+                        }
+                    } else {
+                        // on parcour les membres du groupe un par un
+                        for (itm in curentGroup.members!!) {
+                            /* si l'utilisateur fait partir des membres du groupe oubien s'il est l'administrateur
+                             du groupe on affiche le groupe dans son telephone
+                             */
+                            if (itm == FirebaseAuth.getInstance().currentUser?.uid
+                                || curentGroup.adminId == FirebaseAuth.getInstance().currentUser?.uid
+                            ) {
+                                items.add(GroupeItem(it.toObject(ChatGroup::class.java)!!, it.id, context))
+                                break
+                            }
+                        }
+
+                    }
+
+                }
+
+                onListen(items)
+            }
+    }
+
+    fun addSearchUserListenerForcreatingGroupe(valeurRecherche: String, context: Context,
+        onListen: (List<Item>) -> Unit): ListenerRegistration {
+        return firestoreInstance.collection("users")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.e("FIRESTORE", "Users listener error?", firebaseFirestoreException)
+                    return@addSnapshotListener
+                }
+
+                val items = mutableListOf<Item>()
+                querySnapshot?.documents?.forEach {
+                    if (it.id != FirebaseAuth.getInstance().currentUser?.uid) {
+
+                        if (!valeurRecherche.isEmpty()) {
+                            if (it["name"].toString().toUpperCase().contains(valeurRecherche.toUpperCase())
+                                || it["bio"].toString().toUpperCase().contains(valeurRecherche.toUpperCase())
+                            ) {
+                                items.add(PersonItem(it.toObject(User::class.java)!!, it.id, context))
+                                Log.d("FIRESTOREUTIL", "NOUVELLE VALEURE AJOUTTEE !!!")
+                            }
+                        } else {
+                            items.add(SelectedPersonItem(it.toObject(User::class.java)!!, it.id, context))
+                        }
+                    }
+                }
+                onListen(items)
+            }
     }
 
 }

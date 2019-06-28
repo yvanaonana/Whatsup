@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.whatsup.R
 import com.example.whatsup.Util.StorageUtil
+import com.example.whatsup.glide.GlideApp
 import com.example.whatsup.model.ImageMessage
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_image_message.*
@@ -16,13 +17,11 @@ class ImageMessageItem(val message: ImageMessage,
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         super.bind(viewHolder, position)
-        var requestOptions = RequestOptions()
-        requestOptions.placeholder(R.drawable.ic_image_black_24dp)
-        requestOptions.error(R.drawable.ic_account_circle_black_24dp)
-        Toast.makeText(context, message.ImagePath, Toast.LENGTH_LONG).show()
-        Glide.with(context)
-            .setDefaultRequestOptions(requestOptions)
-            .load(StorageUtil.pathToReference(message.ImagePath))
+        Toast.makeText(context, message.imagePath, Toast.LENGTH_LONG).show()
+        GlideApp.with(context)
+            .load(StorageUtil.pathToReference(message.imagePath))
+            .placeholder(R.drawable.ic_image_black_24dp)
+            .error(R.drawable.ic_account_circle_black_24dp)
             .into(viewHolder.imageView_message_image)
     }
 

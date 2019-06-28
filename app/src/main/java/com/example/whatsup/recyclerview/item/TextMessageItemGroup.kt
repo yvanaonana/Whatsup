@@ -1,26 +1,17 @@
-package com.mirai.whatsup.receycleView.item
+package com.example.whatsup.recyclerview.item
 
 import android.content.Context
 import android.graphics.Color
-
-import android.widget.Toast
 import com.example.whatsup.R
 import com.example.whatsup.Util.FirestoreUtil
-import com.example.whatsup.model.Message
 import com.example.whatsup.model.TextMessage
-import com.example.whatsup.recyclerview.item.MessageItem
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
-import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_text_message_groupe.*
-import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.wrapContent
-import java.text.SimpleDateFormat
-
 
 class TextMessageItemGroup(val message: TextMessage,
-                           val context: Context) : MessageItem(message) {
+                           val context: Context
+) : MessageItem(message) {
     var isSelectet = false
     private val colorTranslateText = Color.GRAY
     private val colorSrcText = Color.BLACK

@@ -16,6 +16,7 @@ import com.example.whatsup.R
 import com.example.whatsup.SignInActivity
 import com.example.whatsup.Util.FirestoreUtil
 import com.example.whatsup.Util.StorageUtil
+import com.example.whatsup.glide.GlideApp
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.fragment_my_account.*
 import kotlinx.android.synthetic.main.fragment_my_account.view.*
@@ -95,8 +96,9 @@ class MyAccountFragment : Fragment() {
             selectedImageBytes = outputStream.toByteArray()
 
             //TODO : load picture
-            Glide.with(this)
+            GlideApp.with(this)
                 .load(selectedImageBytes)
+                .placeholder(R.drawable.ic_image_black_24dp)
                 .into(imageView_profile_picture)
 
             pictureJustChanged = true

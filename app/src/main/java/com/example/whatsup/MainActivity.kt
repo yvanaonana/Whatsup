@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.example.whatsup.fragment.GroupFragment
 import com.example.whatsup.fragment.MyAccountFragment
 import com.example.whatsup.fragment.PeopleFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_my_account ->{
-                    replaceFragment(MyAccountFragment())
+                    replaceFragment(GroupFragment())
                     true
                 }
                 else -> false
