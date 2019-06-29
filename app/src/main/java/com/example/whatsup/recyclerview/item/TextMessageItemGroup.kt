@@ -22,6 +22,7 @@ class TextMessageItemGroup(val message: TextMessage,
 
         val dateFormat = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
         viewHolder.textView_message_time_groupe.text = dateFormat.format(message.time)
+        viewHolder.textView_message_text_group.text = message.text
         // on recupère zt on affiche le nom de de celui qui a envoyer le message
         FirestoreUtil.getUserByUid(message.senderId, onComplete = {
             var senderName = "me"
