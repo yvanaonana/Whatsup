@@ -6,19 +6,22 @@ import com.example.whatsup.R
 import com.example.whatsup.Util.FirestoreUtil
 import com.example.whatsup.model.TextMessage
 import com.google.firebase.auth.FirebaseAuth
+import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_text_message_groupe.*
+import java.text.SimpleDateFormat
 
 class TextMessageItemGroup(val message: TextMessage,
                            val context: Context
-) : MessageItem(message) {
+) : Item() {
     var isSelectet = false
     private val colorTranslateText = Color.GRAY
     private val colorSrcText = Color.BLACK
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
-        super.bind(viewHolder, position)
+        val dateFormat = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
+        viewHolder.textView_message_time_groupe.text = dateFormat.format(message.time)
         // on recupère zt on affiche le nom de de celui qui a envoyer le message
         FirestoreUtil.getUserByUid(message.senderId, onComplete = {
             var senderName = "me"
